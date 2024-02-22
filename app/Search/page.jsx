@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Search() {
   {
@@ -64,6 +65,7 @@ export default function Search() {
         <div className="grid grid-flow-col gap-4">
             {data?.results.map((result) => (
                 <div key={result.id} className=" text-center gap-[8px]">
+                  <Link href={`/${result.media_type}/${result.id}`}>
                 <Image
                     src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                     alt={result.name}
@@ -71,6 +73,7 @@ export default function Search() {
                     height={750}
                     className="rounded-lg"
                 />
+                </Link>
                 <h2>{result.title}</h2>
                </div>
             ))}
