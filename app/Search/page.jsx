@@ -65,7 +65,7 @@ export default function Search() {
         <div className="grid grid-flow-col gap-4">
             {data?.results.map((result) => (
                 <div key={result.id} className=" text-center gap-[8px]">
-                  <Link href={`/${result.media_type}/${result.id}`}>
+                  <Link href={`/Details/${result.media_type}/${result.id}/`}>
                 <Image
                     src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                     alt={result.name}
