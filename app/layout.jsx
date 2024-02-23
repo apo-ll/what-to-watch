@@ -23,7 +23,9 @@ export default function RootLayout({ children }) {
       >
         <MainNav />
         <Providers>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense fallback={<Loading />}>
+            <Slide>{children}</Slide>
+          </Suspense>
         </Providers>
       </body>
     </html>
