@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 
@@ -36,19 +36,25 @@ const HomeCarousel = () => {
     <div class="embla   " ref={emblaRef}>
       <div class="embla__viewport overflow-hidden">
         <div class="embla__container flex gap-4 py-4 pl-3 ">
-            {data.results.map((trending) => (
-            <div className="flex-0 flex-grow-0 flex-shrink-0 "  key={trending.id}>
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${trending.poster_path}`}
-                alt={trending.name}
-                width={200}
-                height={500}
-                className="object-cover rounded-lg hover:outline hover:outline-offset-1 mb-2 hover:outline-white  hover:rounded-lg hover:transition  transition duration-300 ease-in-out"
-              />
-            <h1 className="text-center">{trending.name || trending.title}</h1>
+          {data.results.map((trending) => (
+            <div
+              className="flex-0 flex-grow-0 flex-shrink-0 "
+              key={trending.id}
+            >
+              <Link href={`/Details/${trending.media_type}/${trending.id}/`}>
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${trending.poster_path}`}
+                  alt={trending.name}
+                  width={200}
+                  height={500}
+                  className="object-cover rounded-lg hover:outline hover:outline-offset-1 mb-2 hover:outline-white  hover:rounded-lg hover:transition  transition duration-300 ease-in-out"
+                />
+                <h1 className="text-center">
+                  {trending.name || trending.title}
+                </h1>
+              </Link>
             </div>
-          
-          ))} 
+          ))}
         </div>
       </div>
     </div>

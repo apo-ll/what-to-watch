@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Oval } from "react-loader-spinner";
-import { Suspense } from "react";
+
 
 export default function Search() {
   /* using useState */
@@ -73,7 +73,7 @@ export default function Search() {
                 <Image
                   onError={(e) => {
                     e.target.onerror = null; 
-                    e.target.src = 'fallback-image-url';
+                    e.target.src = '/placeholder.png';
                   }}
                   src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                   alt={result.name}
