@@ -5,8 +5,7 @@ import "@/styles/globalicons.css";
 import { Slide } from "@/styles/slide";
 import { MainNav } from "@/components/main-nav";
 import { Providers } from "@/config/providers";
-import Loading from "./loading";
-import { Suspense } from "react";
+
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 

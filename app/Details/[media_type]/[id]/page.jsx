@@ -24,7 +24,7 @@ export default function Details() {
       return response.json();
   }
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["details", id, media_type],
     queryFn: async () => await fetchDetails(id, media_type),
   })
@@ -32,6 +32,11 @@ export default function Details() {
 
   return (
     <div>
+      {isLoading && (
+        <div className="flex items-center justify-center h-[600px]">
+          <Oval color="#144056" height={100} width={100} />
+        </div>
+      )}
       <div key={data}>
       <h1>{data && data.original_name}</h1>
       <Image

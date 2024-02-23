@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Oval } from "react-loader-spinner";
+import { Suspense } from "react";
 
 export default function Search() {
   /* using useState */
