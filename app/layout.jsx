@@ -5,6 +5,8 @@ import "@/styles/globalicons.css";
 import { Slide } from "@/styles/slide";
 import { MainNav } from "@/components/main-nav";
 import { Providers } from "@/config/providers";
+import Loading from "./loading";
+import { Suspense } from "react";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -21,7 +23,7 @@ export default function RootLayout({ children }) {
       >
         <MainNav />
         <Providers>
-        {children}
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </Providers>
       </body>
     </html>

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TailSpin } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
 
 export default function Search() {
   /* using useState */
@@ -61,7 +61,7 @@ export default function Search() {
       {/* Loading Effect */}
       {isLoading && (
         <div className="flex items-center justify-center h-[600px]">
-          <TailSpin color="#00BFFF" height={100} width={100} />
+          <Oval color="#144056" height={100} width={100} />
         </div>
       )}
       <div className="grid grid-cols-7 gap-3">
@@ -71,8 +71,8 @@ export default function Search() {
               <div className="p-2">
                 <Image
                   onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/placeholder.png";
+                    e.target.onerror = null; 
+                    e.target.src = 'fallback-image-url';
                   }}
                   src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                   alt={result.name}

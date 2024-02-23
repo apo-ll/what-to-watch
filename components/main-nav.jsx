@@ -22,7 +22,7 @@ export const MainNav = () => {
                 href={item.link}
                 className={`${
                   pathname === item.link
-                    ? "text-black bg-white px-[16px] py-[6px] bg-white/50 hover:bg-white hover:transition transition hover:duration-300 hover:ease-in-out rounded-full"
+                    ? "text-black  px-[16px] py-[6px] bg-[#144056]/30 hover:bg-[#144056] hover:transition transition hover:duration-300 hover:ease-in-out rounded-full"
                     : "text-white hover:text-white/50 hover:transition transition hover:duration-300 hover:ease-in-out"
                 }`}
               >
