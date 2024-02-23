@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${urbanist.className} bg-[#0e100f] text-white antialiased`}
       >
+        <MainNav />
         <Providers>
         {children}
         </Providers>

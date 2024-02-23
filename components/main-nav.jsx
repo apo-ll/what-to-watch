@@ -1,27 +1,37 @@
-import { Icons } from "./Icons";
+'use client'
+
+
 import { navigation } from "@/config/homepage";
 import Link from "next/link";
 import Image from "next/image";
-import { MobileNav } from "./mobile-nav";
+
+import { usePathname } from "next/navigation";
 
 export const MainNav = () => {
+  /* Using usePathname hook*/
+  const pathname = usePathname();
+
   return (
     <>
-      <MobileNav className="lg:hidden md:block flex f" />
-      <main className="container lg:block px-5 md:hidden hidden">
-        <div className="py-5 flex flex-row gap-[2rem] border-b border-gray-500 items-center justify-between">
-          <Image src="/logo.svg" width={90} height={50} alt="logo" />
-          <div className="text-xl  gap-[2rem] flex">
+      <main className="container lg:block mb-10 md:hidden hidden text-white">
+        <div className="py-5 flex flex-row gap-[2rem]  items-center justify-between">
+          <div className="text-xl gap-[2rem] flex items-center">
             {navigation.map((item, index) => (
               <Link
                 key={index}
                 href={item.link}
-                className="text-white/50 hover:text-white hover:transition duration-300 hover:duration-300 transition ease-in-out hover:ease-in-out "
+                className={`${
+                  pathname === item.link
+                    ? "text-black bg-white px-[16px] py-[6px] bg-white/50 hover:bg-white hover:transition transition hover:duration-300 hover:ease-in-out rounded-full"
+                    : "text-white hover:text-white/50 hover:transition transition hover:duration-300 hover:ease-in-out"
+                }`}
               >
                 {item.name}
               </Link>
             ))}
           </div>
+
+          <Image src="/logo.svg" width={90} height={50} alt="logo" />
         </div>
       </main>
     </>

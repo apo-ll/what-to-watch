@@ -4,6 +4,7 @@
 
 import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 
 export default function Details() {
   const { media_type, id } = useParams();
@@ -11,7 +12,6 @@ export default function Details() {
   console.log(media_type, id);
 
   async function fetchDetails(id, media_type) {
-    try {
       const response = await fetch(
         `https://api.themoviedb.org/3/${media_type}/${id}?language=en-US`,
         {
@@ -21,16 +21,7 @@ export default function Details() {
           },
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch details");
-      }
-
       return response.json();
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
   }
 
   const { data } = useQuery({
@@ -38,13 +29,19 @@ export default function Details() {
     queryFn: async () => await fetchDetails(id, media_type),
   })
 
-  if (!data) {
-    return <div>Error: Failed to fetch details</div>;
-  }
 
   return (
     <div>
-      <h1>{JSON.stringify(data)}</h1>
+      <div key={data}>
+      <h1>{data && data.original_name}</h1>
+      <Image
+        src={`https://image.tmdb.org/t/p/original${data && data.backdrop_path}`}
+        alt={data && data.original_name}
+        width={1920}
+        height={1080}
+        className="object-cover h-full w-full"
+      />
+      </div>
     </div>
   );
 }
