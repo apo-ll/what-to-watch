@@ -38,8 +38,7 @@ export default function Details() {
           <Oval color="#144056" height={100} width={100} />
         </div>
       )}
-      <div key={data}>
-      <h1>{data && data.original_name}</h1>
+      <div key={data} className='relative'>
       <Image
         src={`https://image.tmdb.org/t/p/original${data && data.backdrop_path}`}
         alt={data && data.original_name}
@@ -47,6 +46,7 @@ export default function Details() {
         height={1080}
         className="object-cover h-full w-full"
       />
+      <h1 className='absolute text-white text-3xl top-0'>{data && data.name || data && data.title}</h1>
       </div>
     </div>
   );

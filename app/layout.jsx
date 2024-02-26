@@ -3,8 +3,10 @@ import "@/styles/globals.css";
 import "@/styles/globalicons.css";
 
 import { Slide } from "@/styles/slide";
-import { MainNav } from "@/components/main-nav";
 import { Providers } from "@/config/providers";
+import { MainNav } from "@/components/main-nav";
+import { navigation } from "@/config/homepage"
+
 
 
 const urbanist = Urbanist({ subsets: ["latin"] });
@@ -20,7 +22,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${urbanist.className} bg-[#0e100f] text-white antialiased`}
       >
-        <MainNav />
+        <MainNav navigation={navigation} />
         <Providers>
             <Slide>{children}</Slide>
         </Providers>

@@ -55,5 +55,13 @@ const navigation = [
     },
   ]
 
-  export { navigation, home };
+  const DetailsNav = [
+    {
+      id: "home",
+      name: "Home",
+      link: "/",
+    }
+  ]
+
+  export { navigation, home, DetailsNav };
   

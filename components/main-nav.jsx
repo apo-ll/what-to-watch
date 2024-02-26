@@ -1,13 +1,11 @@
 'use client'
 
-
-import { navigation } from "@/config/homepage";
 import Link from "next/link";
 import Image from "next/image";
 
 import { usePathname } from "next/navigation";
 
-export const MainNav = () => {
+export const MainNav = ({navigation}) => {
   /* Using usePathname hook*/
   const pathname = usePathname();
 
