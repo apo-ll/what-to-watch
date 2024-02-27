@@ -66,11 +66,11 @@ export default function Search() {
             <Oval color="#144056" height={100} width={100} />
           </div>
         )}
-        <div className="grid grid-cols-7 gap-3">
+        <div className="grid grid-cols-4 gap-3">
           {data?.results.map((result) => (
             <div key={result.id} className=" text-center gap-[8px]">
               <Link href={`/Details/${result.media_type}/${result.id}/`}>
-                <div className="p-2">
+                <div className="p-2 flex flex-col items-center">
                   <Image
                     src={
                       result.poster_path ? 
@@ -78,11 +78,11 @@ export default function Search() {
                       "/placeholder.jpg" 
                     }
                     alt={result.name}
-                    width={200}
-                    height={300}
+                    width={250}
+                    height={150}
                     className="rounded-lg hover:outline hover:outline-white hover:outline-offset-0 hover:rounded-lg"
                   />
-                  <h1 className="mt-3">{result.name || result.title}</h1>
+                  <h1 className="mt-3 w-1/2">{result.name || result.title}</h1>
                 </div>
               </Link>
             </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
@@ -8,6 +9,14 @@ import Image from "next/image";
 const HomeCarousel = () => {
   //using embla hooks
   const [emblaRef, emblaApi] = useEmblaCarousel();
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   // The Trending function fetches the trending movies and TV shows from the TMDB API.
   async function Trending() {
@@ -33,30 +42,32 @@ const HomeCarousel = () => {
   // rendering the carousel
 
   return (
-    <div class="embla   " ref={emblaRef}>
-      <div class="embla__viewport overflow-hidden">
-        <div class="embla__container flex gap-4 py-4 pl-3 ">
+    <div className="embla container ">
+      
+      <div ref={emblaRef} className="overflow-hidden">
+        <div
+          id="container"
+          className="flex shrink-0 grow-0   container   gap-4"
+        >
           {data.results.map((trending) => (
-            <div
-              className="flex-0 flex-grow-0 flex-shrink-0 "
-              key={trending.id}
-            >
-              <Link href={`/Details/${trending.media_type}/${trending.id}/`}>
-                <Image
-                  src={`https://image.tmdb.org/t/p/w500${trending.poster_path}`}
-                  alt={trending.name}
-                  width={200}
-                  height={500}
-                  className="object-cover rounded-lg hover:outline hover:outline-offset-1 mb-2 hover:outline-white  hover:rounded-lg hover:transition  transition duration-300 ease-in-out"
-                />
-                <h1 className="text-center">
-                  {trending.name || trending.title}
-                </h1>
-              </Link>
+            <div id={trending.id} className="flex flex-col items-center text-center pl-3 shrink-0 grow-0">
+            <Image
+              alt={trending.title}
+              width={250}
+              height={150}
+              src={`https://image.tmdb.org/t/p/original${trending.poster_path}`}
+              className="rounded-lg"
+            />
+            <h1 className="mt-3 max-w-sm">{trending.name || trending.title}</h1>
             </div>
           ))}
         </div>
       </div>
+      <div className="justify-end flex gap-3 mt-4">
+      <button onClick={scrollPrev} className="border-2 px-3 py-1 rounded-full border-white text-white">prev</button>
+      <button onClick={scrollNext} className="border-2 px-3 py-1 rounded-full border-white text-white">next</button>
+      </div>
+      
     </div>
   );
 };
