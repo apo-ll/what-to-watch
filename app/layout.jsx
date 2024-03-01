@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${urbanist.className} bg-[#0e100f] text-white antialiased`}
+        className={`${urbanist.className} bg-[#201a17] text-white antialiased`}
       >
         <MainNav navigation={navigation} />
         <Providers>
