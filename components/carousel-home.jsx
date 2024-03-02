@@ -54,6 +54,7 @@ const HomeCarousel = () => {
             <div id={trending.id} className="flex flex-col items-center text-center pl-3 shrink-0 grow-0">
             <Image
               alt={trending.title}
+              unoptimized
               width={250}
               height={150}
               src={`https://image.tmdb.org/t/p/original${trending.poster_path}`}

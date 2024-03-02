@@ -79,6 +79,7 @@ export default function Search() {
                       "/placeholder.jpg" 
                     }
                     alt={result.name}
+                    unoptimized
                     width={250}
                     height={150}
                     className="rounded-lg hover:outline hover:drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)] transition-all ease-in-out duration-300 hover:outline-white hover:outline-offset-0 hover:rounded-lg"
