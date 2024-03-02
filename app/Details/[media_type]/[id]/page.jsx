@@ -5,7 +5,7 @@
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Oval } from "react-loader-spinner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function Details() {
@@ -55,9 +55,12 @@ export default function Details() {
   });
 
   const [currentTrailer, setCurrentTrailer] = useState(null);
+  const [currentTrailerIndex, setCurrentTrailerIndex] = useState(0);
+  const videoRef = useRef(null);
 
-  const handleThumbnailClick = (trailerKey) => {
+  const handleThumbnailClick = (trailerKey, index) => {
     setCurrentTrailer(trailerKey);
+    setCurrentTrailerIndex(index);
   };
 
   useEffect(() => {
@@ -66,6 +69,10 @@ export default function Details() {
       setCurrentTrailer(trailer.results[0].key);
     }
   }, [trailer]);
+
+  const filteredTrailers = trailer?.results.filter((trailer) =>
+    trailer.name.includes("Trailer")
+  );
 
   return (
     <div className="container flex flex-row gap-3 justify-between text-azure-radiance-50 p-2">
@@ -76,20 +83,16 @@ export default function Details() {
       )}
       <div className="gap-5 flex lg:flex-row flex-col container  ">
         <div className="flex flex-col justify-between gap-5 container">
-
           {currentTrailer && (
-          
             <iframe
               width="1100"
-              height='700'
-              src={`https://www.youtube.com/embed/${currentTrailer}?autoplay=1&controls=1&mute=0&showinfo=0&autohide=1&modestbranding=0`}
+              height="700"
+              src={`https://www.youtube.com/embed/${filteredTrailers[currentTrailerIndex].key}?autoplay=1&controls=1&mute=0&showinfo=0&autohide=1&modestbranding=0`}
               title="Trailer"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              
               className="drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)]  backdrop-blur-3xl rounded-xl"
             ></iframe>
-  
           )}
 
           <div className="flex flex-col gap-6 mb-10 w-full">
@@ -99,34 +102,32 @@ export default function Details() {
             <p className="text-balance ">{info && info.overview}</p>
           </div>
         </div>
- 
-            {/* The Trailers Section */}
-        <div className=" lg:h-[700px] container w-auto lg:overflow-y-auto overflow-x-auto scroll-smooth border-0 border-white rounded-lg px-3">
-          
 
+        {/* The Trailers Section */}
+        <div className="lg:h-[700px] container w-auto lg:overflow-y-auto overflow-x-auto scroll-smooth border-0 border-white rounded-lg px-3">
           <div className="flex lg:flex-col flex-row gap-4">
-            {trailer &&
-              trailer.results.map((trailer) => (
-              
-                  <div className=" p-3  overflow-x-auto  flex flex-col  outline-1 o">
-                    <Image 
-                      src={`https://img.youtube.com/vi/${trailer.key}/0.jpg`}
-                      width={448}
-                      height={299}
-                      alt={trailer.title}
-                      onClick={() => handleThumbnailClick(trailer.key)}
-                      className="object-cover  rounded-xl  overflow-hidden cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out"
-                      unoptimized
-                    />
-                    <h1 className="font-medium text-sm  top-[223px] left-[25px]">{trailer.name}</h1>
-                
-                  
+            {filteredTrailers &&
+              filteredTrailers.map((trailer, index) => (
+                <div
+                  className="p-3 overflow-x-auto flex flex-col outline-1 o"
+                  key={trailer.key}
+                >
+                  <Image
+                    src={`https://img.youtube.com/vi/${trailer.key}/0.jpg`}
+                    width={448}
+                    height={299}
+                    alt={trailer.title}
+                    onClick={() => handleThumbnailClick(trailer.key, index)}
+                    className="object-cover rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out"
+                    unoptimized
+                  />
+                  <h1 className="font-medium text-sm top-[223px] left-[25px]">
+                    {trailer.name}
+                  </h1>
                 </div>
               ))}
           </div>
         </div>
-
-
       </div>
     </div>
   );
