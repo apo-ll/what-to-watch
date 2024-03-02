@@ -47,10 +47,10 @@ const HomeCarousel = () => {
       <div ref={emblaRef} className="overflow-hidden">
         <div
           id="container"
-          className="flex shrink-0 grow-0   container h-[500px]   gap-4"
+          className="flex shrink-0 grow-0  container    gap-4"
         >
           {data.results.map((trending) => (
-            <Link href={`/Details/${trending.media_type}/${trending.id}/`}>
+            <Link href={`/Details/${trending.media_type}/${trending.id}/`} className="flex shrink-0 grow-0  w-auto items-center container    gap-4">
             <div id={trending.id} className="flex flex-col items-center text-center pl-3 shrink-0 grow-0">
             <Image
               alt={trending.title}
