@@ -68,7 +68,7 @@ export default function Details() {
   }, [trailer]);
 
   return (
-    <div className="container flex flex-row gap-3 justify-between">
+    <div className="container flex flex-row gap-3 justify-between text-azure-radiance-50">
       {isLoading && (
         <div className="flex items-center justify-center h-[600px]">
           <Oval color="#144056" height={100} width={100} />
@@ -76,27 +76,30 @@ export default function Details() {
       )}
       <div className="items-start gap-5 flex flex-row  ">
         <div className="flex flex-col justify-between gap-5">
+
           {currentTrailer && (
+          
             <iframe
               width="1000"
               height='550'
-              src={`https://www.youtube.com/embed/${currentTrailer}?autoplay=1&controls=1&mute=1&showinfo=0&autohide=1&modestbranding=1&loop=1&playlist=${currentTrailer}`}
+              src={`https://www.youtube.com/embed/${currentTrailer}?autoplay=1&controls=1&mute=0&showinfo=0&autohide=1&modestbranding=0`}
               title="Trailer"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
-              className="rounded-xl"
+              className="drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)]  backdrop-blur-3xl rounded-xl"
             ></iframe>
+  
           )}
 
           <div className="flex flex-col gap-6 mb-10   max-w-2xl">
             <h1 className="text-3xl mt-5">
               {(info && info.title) || (info && info.name)}
             </h1>
-            <p className="text-wrap ">{info && info.overview}</p>
+            <p className="text-balance ">{info && info.overview}</p>
           </div>
         </div>
-        <div className=" flex flex-col h-[650px] overflow-y-auto border border-white rounded-lg px-3">
+        <div className=" flex flex-col h-[550px] w-full overflow-y-auto scroll-smooth border border-white rounded-lg px-3">
           <div className=" p-5 z-[9999px] bg-white">
             <h2 className="  text-black ">Trailers</h2>
           </div>
@@ -107,18 +110,18 @@ export default function Details() {
                 <div
                   className={`${
                     currentTrailer === trailer.key
-                      ? "bg-white opacity-50 text-black"
+                      ? "bg-azure-radiance-50 text-black"
                       : "hover:bg-white hover:opacity-30 transition-all duration-300 ease-in-out"
-                  } flex flex-row  p-3`}
+                  } flex flex-row  gap-5`}
                 >
-                  <div style={{ width: "400px", height: "200px" }}>
+                  <div className="shrink-0 grow-0 p-3">
                     <Image
                       src={`https://img.youtube.com/vi/${trailer.key}/0.jpg`}
-                      width={400}
-                      height={200}
+                      width={100}
+                      height={50}
                       alt={trailer.title}
                       onClick={() => handleThumbnailClick(trailer.key)}
-                      className="w-[400px]  rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out"
+                      className="  rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out"
                       unoptimized
                     />
                 </div>

@@ -20,8 +20,8 @@ export const MainNav = ({navigation}) => {
                 href={item.link}
                 className={`${
                   pathname === item.link
-                    ? "text-white  px-[16px] py-[6px] bg-[#144056] hover:bg-[#144056] hover:transition transition hover:duration-300 hover:ease-in-out rounded-full"
-                    : "text-white hover:text-[#144056] hover:transition transition hover:duration-300 hover:ease-in-out"
+                    ? "text-white  px-[16px] py-[6px] bg-azure-radiance-700 hover:bg-azure-radiance-600 hover:transition transition hover:duration-300 hover:ease-in-out rounded-full"
+                    : "text-white hover:text-white/80 hover:transition transition hover:duration-300 hover:ease-in-out"
                 }`}
               >
                 {item.name}

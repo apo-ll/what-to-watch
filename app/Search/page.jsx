@@ -46,7 +46,7 @@ export default function Search() {
 
   return (
     <>
-      <main className="container">
+      <main className="container ">
         <div className="relative mb-10">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
             <span className="material-symbols-outlined fill-white">Search</span>
@@ -56,7 +56,7 @@ export default function Search() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search for a movie, tv show, person..."
-            className="bg-zinc-800 border-2 w-full pl-16 rounded-[40px] h-[65px] border-indigo-300/50 text-neutral-200 lg:text-[22px] md:text-lg text-sm font-normal outline-none focus:ring-2 focus:ring-indigo-300 focus:border-transparent focus:ring-offset-0 focus:ring-offset-transparent"
+            className="bg-azure-radiance-950 border-2 w-full placeholder-white pl-16 rounded-[40px] h-[65px] border-azure-radiance-800 text-white lg:text-[22px] md:text-lg text-sm font-normal outline-none focus:ring-2 focus:ring-azure-radiance-900  focus:border-transparent focus:ring-offset-0 focus:ring-offset-transparent"
           />
         </div>
 
@@ -81,7 +81,7 @@ export default function Search() {
                     alt={result.name}
                     width={250}
                     height={150}
-                    className="rounded-lg hover:outline hover:outline-white hover:outline-offset-0 hover:rounded-lg"
+                    className="rounded-lg hover:outline hover:drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)] transition-all ease-in-out duration-300 hover:outline-white hover:outline-offset-0 hover:rounded-lg"
                   />
                   <h1 className="mt-3 w-1/2">{result.name || result.title}</h1>
                 </div>

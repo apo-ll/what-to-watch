@@ -47,19 +47,22 @@ const HomeCarousel = () => {
       <div ref={emblaRef} className="overflow-hidden">
         <div
           id="container"
-          className="flex shrink-0 grow-0   container   gap-4"
+          className="flex shrink-0 grow-0   container h-[500px]   gap-4"
         >
           {data.results.map((trending) => (
+            <Link href={`/Details/${trending.media_type}/${trending.id}/`}>
             <div id={trending.id} className="flex flex-col items-center text-center pl-3 shrink-0 grow-0">
             <Image
               alt={trending.title}
               width={250}
               height={150}
               src={`https://image.tmdb.org/t/p/original${trending.poster_path}`}
-              className="rounded-lg"
+              className="rounded-lg hover:outline hover:drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)] transition-all ease-in-out duration-300 hover:outline-white hover:outline-offset-0 hover:rounded-lg"
             />
             <h1 className="mt-3 max-w-sm">{trending.name || trending.title}</h1>
             </div>
+           </Link>
+
           ))}
         </div>
       </div>

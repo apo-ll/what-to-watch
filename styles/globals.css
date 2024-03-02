@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 
-.embla__slide {
-    flex: 0 0 100%; /* Slide covers 80% of the viewport */
+@layer components {
+  .all-\[unset\] {
+  all: unset;
   }
-  
-  .embla__container {
-    display: flex;
+  }
+  :root {
+  --variable-collection-boolean: initial;
+  --variable-collection-color: rgba(255, 255, 255, 1);
+  --variable-collection-heell: none;
   }
