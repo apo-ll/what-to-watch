@@ -4,16 +4,19 @@
 
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { Oval } from "react-loader-spinner";
 import { useState, useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
-
-const Oval = dynamic(() => import("react-loader-spinner"));
-const Image = dynamic(() => import("next/image"));
+import Image from "next/image";
+import { YouTubeEmbed } from '@next/third-parties/google'
 
 export default function Details() {
+  /* Extract the media_type and the id */
   const { media_type, id } = useParams();
 
-  const fetchDetails = async (id, media_type) => {
+  console.log(media_type, id);
+
+  /* Fetching the information about the movie/tv */
+  async function fetchDetails(id, media_type) {
     const response = await fetch(
       `https://api.themoviedb.org/3/${media_type}/${id}?language=en-US`,
       {
@@ -24,9 +27,10 @@ export default function Details() {
       }
     );
     return response.json();
-  };
+  }
 
-  const fetchTrailers = async (id, media_type) => {
+  /* Fetching Trailers of the movie/tv */
+  async function fetchTrailers(id, media_type) {
     const response = await fetch(
       `https://api.themoviedb.org/3/${media_type}/${id}/videos?language=en-US`,
       {
@@ -37,13 +41,15 @@ export default function Details() {
       }
     );
     return response.json();
-  };
+  }
 
+  /* sending the data in form of of 'info' name */
   const { data: info, isLoading } = useQuery({
     queryKey: ["details", id, media_type],
     queryFn: async () => await fetchDetails(id, media_type),
   });
 
+  /* Sending the data inform of trailer name */
   const { data: trailer } = useQuery({
     queryKey: ["trailers", id, media_type],
     queryFn: async () => await fetchTrailers(id, media_type),
@@ -59,6 +65,7 @@ export default function Details() {
   };
 
   useEffect(() => {
+    // Assuming trailers is your array of trailers
     if (trailer && trailer.results.length > 0) {
       setCurrentTrailer(trailer.results[0].key);
     }
@@ -75,18 +82,14 @@ export default function Details() {
           <Oval color="#144056" height={100} width={100} />
         </div>
       )}
-      <div className="gap-5 flex lg:grid lg:grid-cols-2 container">
+      <div className="gap-5 flex lg:flex-row flex-col container  ">
         <div className="flex flex-col justify-between gap-5 container">
           {currentTrailer && (
-            <iframe
-              width="1100"
-              height="700"
-              src={`https://www.youtube.com/embed/${filteredTrailers[currentTrailerIndex].key}?autoplay=1&controls=1&mute=0&showinfo=0&autohide=1&modestbranding=0`}
-              title="Trailer"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              className="drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)]  backdrop-blur-3xl rounded-xl"
-            ></iframe>
+            <YouTubeEmbed
+              videoid={filteredTrailers[currentTrailerIndex].key}
+              height={700}
+              params="controls=0"
+            />
           )}
 
           <div className="flex flex-col gap-6 mb-10 w-full">
@@ -97,12 +100,13 @@ export default function Details() {
           </div>
         </div>
 
-        <div className="lg:h-[700px] container w-auto lg:overflow-y-auto overflow-x-auto scroll-smooth border-0 border-white rounded-lg px-3">
-          <div className="grid grid-cols-2 gap-4">
+        {/* The Trailers Section */}
+        <div className="lg:h-[700px] container w-auto lg:overflow-y-auto overflow-x-auto    px-3">
+          <div className="flex lg:flex-col flex-row gap-4">
             {filteredTrailers &&
               filteredTrailers.map((trailer, index) => (
                 <div
-                  className="p-3 overflow-x-auto flex flex-col outline-1 o"
+                  className={`p-3 flex flex-col  rounded-xl`}
                   key={trailer.key}
                 >
                   <Image
@@ -111,10 +115,10 @@ export default function Details() {
                     height={299}
                     alt={trailer.title}
                     onClick={() => handleThumbnailClick(trailer.key, index)}
-                    className="object-cover rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-all duration-300 ease-in-out"
+                    className={`object-cover rounded-xl outline-2 outline-white hover:opacity-80 transition-all duration-300 ease-in-out `}
                     unoptimized
                   />
-                  <h1 className="font-medium text-sm top-[223px] left-[25px]">
+                  <h1 className="font-medium text-sm">
                     {trailer.name}
                   </h1>
                 </div>
