@@ -4,18 +4,16 @@
 
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Oval } from "react-loader-spinner";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Oval = dynamic(() => import("react-loader-spinner"));
+const Image = dynamic(() => import("next/image"));
 
 export default function Details() {
-  /* Extract the media_type and the id */
   const { media_type, id } = useParams();
 
-  console.log(media_type, id);
-
-  /* Fetching the information about the movie/tv */
-  async function fetchDetails(id, media_type) {
+  const fetchDetails = async (id, media_type) => {
     const response = await fetch(
       `https://api.themoviedb.org/3/${media_type}/${id}?language=en-US`,
       {
@@ -26,10 +24,9 @@ export default function Details() {
       }
     );
     return response.json();
-  }
+  };
 
-  /* Fetching Trailers of the movie/tv */
-  async function fetchTrailers(id, media_type) {
+  const fetchTrailers = async (id, media_type) => {
     const response = await fetch(
       `https://api.themoviedb.org/3/${media_type}/${id}/videos?language=en-US`,
       {
@@ -40,15 +37,13 @@ export default function Details() {
       }
     );
     return response.json();
-  }
+  };
 
-  /* sending the data in form of of 'info' name */
   const { data: info, isLoading } = useQuery({
     queryKey: ["details", id, media_type],
     queryFn: async () => await fetchDetails(id, media_type),
   });
 
-  /* Sending the data inform of trailer name */
   const { data: trailer } = useQuery({
     queryKey: ["trailers", id, media_type],
     queryFn: async () => await fetchTrailers(id, media_type),
@@ -64,7 +59,6 @@ export default function Details() {
   };
 
   useEffect(() => {
-    // Assuming trailers is your array of trailers
     if (trailer && trailer.results.length > 0) {
       setCurrentTrailer(trailer.results[0].key);
     }
@@ -81,7 +75,7 @@ export default function Details() {
           <Oval color="#144056" height={100} width={100} />
         </div>
       )}
-      <div className="gap-5 flex lg:flex-row flex-col container  ">
+      <div className="gap-5 flex lg:grid lg:grid-cols-2 container">
         <div className="flex flex-col justify-between gap-5 container">
           {currentTrailer && (
             <iframe
@@ -103,9 +97,8 @@ export default function Details() {
           </div>
         </div>
 
-        {/* The Trailers Section */}
         <div className="lg:h-[700px] container w-auto lg:overflow-y-auto overflow-x-auto scroll-smooth border-0 border-white rounded-lg px-3">
-          <div className="flex lg:flex-col flex-row gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {filteredTrailers &&
               filteredTrailers.map((trailer, index) => (
                 <div

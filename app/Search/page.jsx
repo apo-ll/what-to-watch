@@ -2,18 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { Oval } from "react-loader-spinner"
+import { Oval } from "react-loader-spinner";
 import fallback from "@/public/placeholder.jpg";
 
 export default function Search() {
-  /* using useState */
-
   const [searchTerm, setSearchTerm] = useState("");
   const token = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
-  /* Fetching Data */
 
   const Search = async () => {
     const response = await fetch(
@@ -28,8 +22,6 @@ export default function Search() {
     return response.json();
   };
 
-  /* Using useQuery hook and refetch */
-
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["search", searchTerm],
     queryFn: async () => await Search(),
@@ -37,16 +29,18 @@ export default function Search() {
   });
 
   useEffect(() => {
-    if (searchTerm) {
-      refetch();
-    }
-  }, [searchTerm, refetch]);
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm) {
+        refetch();
+      }
+    }, 500);
 
-  /* Rendering the Page */
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, refetch]);
 
   return (
     <>
-      <main className="container ">
+      <main className="container">
         <div className="relative mb-10">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
             <span className="material-symbols-outlined fill-white">Search</span>
@@ -60,7 +54,6 @@ export default function Search() {
           />
         </div>
 
-        {/* Loading Effect */}
         {isLoading && (
           <div className="flex items-center justify-center h-[600px]">
             <Oval color="#144056" height={100} width={100} />
@@ -69,24 +62,25 @@ export default function Search() {
 
         <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-3">
           {data?.results.map((result) => (
-            <div key={result.id} className=" text-center gap-[8px]">
-              <Link href={`/Details/${result.media_type}/${result.id}/`}>
-                <div className="p-2 flex flex-col items-center">
-                  <Image
+            <div key={result.id} className="text-center gap-[8px]">
+              <a
+                href={`/Details/${result.media_type}/${result.id}/`}
+                className="p-2 flex flex-col items-center"
+              >
+                <div className="aspect-w-2 aspect-h-3">
+                  <img
                     src={
-                      result.poster_path ? 
-                      `https://image.tmdb.org/t/p/w500${result.poster_path}` : 
-                      "/placeholder.jpg" 
+                      result.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${result.poster_path}`
+                        : fallback
                     }
                     alt={result.name}
                     unoptimized
-                    width={250}
-                    height={150}
                     className="rounded-lg hover:outline hover:drop-shadow-[0px_10px_20px_rgba(255,255,255,0.25)] transition-all ease-in-out duration-300 hover:outline-white hover:outline-offset-0 hover:rounded-lg"
                   />
-                  <h1 className="mt-3 w-1/2">{result.name || result.title}</h1>
                 </div>
-              </Link>
+                <h1 className="mt-3 w-1/2">{result.name || result.title}</h1>
+              </a>
             </div>
           ))}
         </div>
